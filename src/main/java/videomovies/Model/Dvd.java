@@ -1,7 +1,7 @@
 package videomovies.Model;
 
 import javax.persistence.*;
-import java.util.Set;
+import javax.validation.constraints.NotNull;
 
 /**
  * Created by DAM on 4/5/15.
@@ -15,18 +15,30 @@ public class Dvd {
     @Column(name = "dvd_id")
     private Long id;
 
+    @Column
+    @NotNull
+    private Long serialNumber;
+
+    @Column
+    @NotNull
     private String title;
+
+    @Column
+    @NotNull
+    @Enumerated(EnumType.STRING)
     private DvdType dvdType;
-    private Set<Movie> content;
+
+    @ManyToOne
+    private Movie movie;
 
     public Dvd() {
     }
 
-    public Dvd(Long id, String title, DvdType dvdType, Set<Movie> content) {
+    public Dvd(Long id, String title, DvdType dvdType, Movie movie) {
         this.id = id;
         this.title = title;
         this.dvdType = dvdType;
-        this.content = content;
+        this.movie = movie;
     }
 
     public Long getId() {
@@ -41,6 +53,14 @@ public class Dvd {
         this.title = title;
     }
 
+    public Long getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(Long serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
     public DvdType getDvdType() {
         return dvdType;
     }
@@ -49,12 +69,12 @@ public class Dvd {
         this.dvdType = dvdType;
     }
 
-    public Set<Movie> getContent() {
-        return content;
+    public Movie getMovie() {
+        return movie;
     }
 
-    public void setContent(Set<Movie> content) {
-        this.content = content;
+    public void setMovie(Movie movie) {
+        this.movie = movie;
     }
 
     @Override
@@ -63,7 +83,6 @@ public class Dvd {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", dvdType=" + dvdType +
-                ", content=" + content +
                 '}';
     }
 }

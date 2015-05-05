@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -13,6 +14,9 @@ import java.util.Set;
 @Entity
 @Table(name = "movies")
 public class Movie {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "movie_id")
     private Long id;
     @Column
     @NotNull
@@ -21,9 +25,11 @@ public class Movie {
     @Column
     @NotNull
     private String director;
+
     @Column
     @NotNull
     private int year;
+
     @Column
     @NotNull
     private String country;
@@ -32,8 +38,11 @@ public class Movie {
     @ManyToMany
     private Set<Actor> actors;
 
-    @Enumerated(EnumType.STRING)
+    @OneToMany
     private Set<Genre> genres;
+
+    @OneToMany(mappedBy = "movie")
+    private Set<Dvd> dvds = new HashSet<>();
 
     public Movie() {
     }
@@ -108,8 +117,6 @@ public class Movie {
                 ", director='" + director + '\'' +
                 ", year=" + year +
                 ", country='" + country + '\'' +
-                ", actors=" + actors +
-                ", genres=" + genres +
                 '}';
     }
 }

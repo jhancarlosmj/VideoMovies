@@ -34,6 +34,9 @@ public class Actor {
     @ManyToMany(mappedBy = "actors")
     private Set<Movie> movies = new HashSet<>();
 
+    public Actor() {
+    }
+
     public Actor(String fname, String lname, Date birthdate) {
         this.fname = fname;
         this.lname = lname;
